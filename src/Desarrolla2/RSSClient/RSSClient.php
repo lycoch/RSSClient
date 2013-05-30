@@ -92,7 +92,7 @@ class RSSClient extends FeedHandler implements RSSClientInterface
      * @return array                     $nodes
      * @throws \InvalidArgumentException
      */
-    public function fetch($channel = 'default')
+    public function fetch($channel = 'default',$limit=20)
     {
         if (!is_string($channel)) {
             throw new \InvalidArgumentException('channel not valid (' . gettype($channel) . ')');
@@ -101,12 +101,15 @@ class RSSClient extends FeedHandler implements RSSClientInterface
             throw new \InvalidArgumentException('channel not valid (' . $channel . ')');
         }
         $this->nodes = new NodeCollection();
+	$count=0;
         foreach ($this->feeds[$channel] as $feed) {
             try {
                 $feed = $this->fetchHTTP($feed);
                 if ($feed) {
                     $nodes = $this->parser->parse($feed, $this->sanitizerHandler);
                     foreach ($nodes as $node) {
+			if(++$count>=$limit)
+                            break;
                         $this->nodes->append($node);
                     }
                 }
