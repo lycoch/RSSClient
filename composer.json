@@ -1,5 +1,5 @@
 {
-    "name": "desarrolla2/rss-client",
+    "name": "lycoch/rss-client",
     "description": "A simple to use RSS client library.",
     "keywords": ["rss", "rss20", "feed", "feed parser", "atom10"],
     "type": "library",
